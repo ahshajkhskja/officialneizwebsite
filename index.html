@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OFFICIAL NEIZ WEBSITE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@900&family=Outfit:wght@400;900&family=Space+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #030303;
+            --red: #ff0000;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: crosshair;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--white);
+            font-family: 'Noto Sans JP', sans-serif;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .scanlines {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), 
+                        linear-gradient(90deg, rgba(255, 0, 0, 0.02), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.02));
+            background-size: 100% 3px, 3px 100%;
+            z-index: 20;
+            pointer-events: none;
+        }
+
+        .ghost-bg {
+            position: fixed;
+            right: -2vw;
+            bottom: -2vh;
+            font-family: 'Outfit';
+            font-size: 38vw;
+            font-weight: 900;
+            color: transparent;
+            -webkit-text-stroke: 1px rgba(255, 0, 0, 0.03);
+            line-height: 0.8;
+            z-index: -1;
+            user-select: none;
+        }
+
+        .main-ui {
+            position: relative;
+            z-index: 5;
+            width: 90%;
+            max-width: 1400px;
+        }
+
+        .header-wrap {
+            display: flex;
+            align-items: flex-start;
+            gap: 40px;
+        }
+
+        .vert-tag {
+            writing-mode: vertical-rl;
+            font-size: 1.4rem;
+            letter-spacing: 0.6em;
+            font-weight: 900;
+            color: var(--red);
+            border-right: 2px solid var(--red);
+            padding-right: 15px;
+            text-transform: uppercase;
+            animation: glitchText 4s infinite;
+        }
+
+        .title-container {
+            position: relative;
+        }
+
+        h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(6rem, 16vw, 20rem);
+            line-height: 0.8;
+            letter-spacing: -0.06em;
+            font-weight: 900;
+            text-transform: uppercase;
+            position: relative;
+            color: var(--white);
+        }
+
+        .red-text {
+            color: var(--red);
+            position: relative;
+            display: inline-block;
+        }
+
+        .red-text::before, .red-text::after {
+            content: 'NEIZ';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg);
+        }
+
+        .red-text::before {
+            left: 3px;
+            text-shadow: -3px 0 #00ffff;
+            clip-path: inset(0 0 70% 0);
+            animation: glitchTop 3s infinite linear alternate-reverse;
+        }
+
+        .red-text::after {
+            left: -3px;
+            text-shadow: 3px 0 #ff00ff;
+            clip-path: inset(70% 0 0 0);
+            animation: glitchBottom 3s infinite linear alternate-reverse;
+        }
+
+        .nav {
+            margin-top: 60px;
+            display: flex;
+            gap: 60px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--white);
+            display: flex;
+            flex-direction: column;
+            transition: 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        .nav-link:hover {
+            transform: translateY(-10px);
+            color: var(--red);
+        }
+
+        .nav-link .jp { font-size: 3rem; font-weight: 900; }
+        .nav-link .en { font-size: 0.7rem; letter-spacing: 0.5em; opacity: 0.4; font-family: 'Space Mono'; margin-top: 5px; }
+
+        .footer-action {
+            position: fixed;
+            bottom: 60px;
+            right: 60px;
+            z-index: 100;
+        }
+
+        .copy-trigger {
+            background: var(--red);
+            color: white;
+            border: none;
+            padding: 25px 80px;
+            font-family: 'Noto Sans JP';
+            font-weight: 900;
+            font-size: 1.2rem;
+            letter-spacing: 0.4em;
+            transition: 0.3s;
+            box-shadow: 15px 15px 0px var(--white);
+            clip-path: polygon(10% 0, 100% 0, 100% 70%, 90% 100%, 0 100%, 0 30%);
+        }
+
+        .copy-trigger:hover {
+            box-shadow: 0px 0px 0px var(--white);
+            transform: translate(10px, 10px);
+            background: #d40000;
+        }
+
+        @keyframes glitchTop {
+            2%, 64% { transform: translate(2px, -2px); }
+            4%, 60% { transform: translate(-2px, 2px); }
+            62% { transform: translate(13px, -1px) skew(-13deg); }
+        }
+
+        @keyframes glitchBottom {
+            2%, 64% { transform: translate(-2px, 2px); }
+            4%, 60% { transform: translate(2px, -2px); }
+            62% { transform: translate(-22px, 5px) skew(21deg); }
+        }
+
+        @keyframes glitchText {
+            0%, 90%, 100% { opacity: 1; transform: translateX(0); }
+            91% { opacity: 0.5; transform: translateX(-5px); }
+            92% { opacity: 1; transform: translateX(5px); }
+            95% { text-shadow: 5px 0 var(--red), -5px 0 #0ff; }
+        }
+
+        @media (max-width: 900px) {
+            .header-wrap { flex-direction: column-reverse; gap: 20px; }
+            .vert-tag { writing-mode: horizontal-tb; border-right: none; border-bottom: 2px solid var(--red); padding-bottom: 10px; width: fit-content; }
+            .nav { flex-direction: column; gap: 20px; }
+            .footer-action { width: calc(100% - 40px); left: 20px; bottom: 20px; }
+            .copy-trigger { width: 100%; clip-path: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="scanlines"></div>
+    <div class="ghost-bg">NEIZ</div>
+
+    <main class="main-ui">
+        <section class="header-wrap">
+            <!-- Text changed to the Japanese phonetic for "Subscribe!" -->
+            <div class="vert-tag">サブスクライブ！</div>
+            <div class="title-container">
+                <h1><span class="red-text">NEIZ</span><br>404</h1>
+            </div>
+        </section>
+
+        <nav class="nav">
+            <a href="https://discord.gg/uQDacs7njd" target="_blank" class="nav-link">
+                <span class="jp">ディスコード</span>
+                <span class="en">// COMMUNITY_HUB</span>
+            </a>
+            <a href="https://www.youtube.com/@Neiz404" target="_blank" class="nav-link">
+                <span class="jp">ユーチューブ</span>
+                <span class="en">// VIDEO_ARCHIVE</span>
+            </a>
+        </nav>
+    </main>
+
+    <div class="footer-action">
+        <button class="copy-trigger" onclick="copy()" id="copyBtn">COPY SCRIPT</button>
+    </div>
+
+    <script>
+        function copy() {
+            const t = 'loadstring(game:HttpGet("https://api.jnkie.com/api/v1/luascripts/public/968044df231bc10bc131130204b4e37c76367ee0925819bed2ba0154d1e32a8f/download"))()';
+            const b = document.getElementById('copyBtn');
+            navigator.clipboard.writeText(t).then(() => {
+                b.innerText = "COPIED TO CLIPBOARD";
+                b.style.background = "white";
+                b.style.color = "black";
+                setTimeout(() => {
+                    b.innerText = "COPY SCRIPT";
+                    b.style.background = "var(--red)";
+                    b.style.color = "white";
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
